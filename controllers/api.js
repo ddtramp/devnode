@@ -3,6 +3,49 @@ const products = require('../products');
 const APIError = require('../rest').APIError;
 
 module.exports = {
+    /**
+     * sign
+     * @param ctx
+     * @param next
+     * @returns {Promise.<void>}
+     * @constructor
+     */
+    'POST /api/signin' : async (ctx, next) => {
+        let name = ctx.request.body.name;
+        let passwd = ctx.request.body.passwd;
+
+        console.log('Name: ' + name + ' | Passwd: ' + passwd);
+
+        let user = {
+            name: name || "unknow",
+            passwd: '****',
+            Created_At: new Date()
+        };
+        ctx.session.user = user;
+        ctx.rest({
+            user: user
+        });
+
+    },
+    /**
+     * get signin user info
+     * @param ctx
+     * @param next
+     * @returns {Promise.<void>}
+     * @constructor
+     */
+    'GET /api/getSignInUser': async (ctx, next) => {
+        let user = ctx.session.user;    // get SESSION
+        console.log(user);
+        if (user) {
+            ctx.rest(user);
+        } else {
+            throw new APIError('user:not_found', 'user not sign in.');
+        }
+    },
+
+
+
     'GET /api/products': async (ctx, next) => {
         ctx.rest({
             products: products.getProducts()

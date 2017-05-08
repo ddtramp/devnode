@@ -5,6 +5,8 @@ const ws = require('ws');
 const Cookies = require('cookies');
 
 const Koa = require('koa');
+const session = require('koa-session2');
+const Store = require("./Store.js");
 
 const bodyParser = require('koa-bodyparser');
 
@@ -21,6 +23,12 @@ const WebSocketServer = ws.Server;
 const app = new Koa();
 
 const isProduction = process.env.NODE_ENV === 'production';
+
+
+app.use(session({
+    key: "sessionId",
+    store: new Store()
+}));
 
 // log request URL:
 app.use(async (ctx, next) => {
