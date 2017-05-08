@@ -6,6 +6,24 @@
         
         npm start
         
+   uri:
+   
+        /api
+        GET /testapi
+
+        GET /api/products
+        POST /api/products
+        DELETE /api/products/:id
+        
+        /index
+        /
+        
+        /sign
+        GET /signin
+        POST /signin
+        GET /signout
+        
+        
    test restful api
    test web socket
    
